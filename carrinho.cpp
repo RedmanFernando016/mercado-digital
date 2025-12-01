@@ -46,24 +46,39 @@ static string normalize_text(const string &s) {
 
 void adicionar(const vector<item> &produtos, vector<item> &carrinho, const string &nome){
     bool encontrado = false;
-    string nomes;
+    string nomes= nome;
     int quantidade;
 
     cout << "Digite o nome do produto que deseja adicionar ao carrinho: " << endl;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, nomes);
 
-    for(int i = 0; i < produtos.size(); i++){
+    for(int i = 0; i < (int)produtos.size(); i++){
         if(normalize_text(produtos[i].nome) == normalize_text(nomes)){
             cout << "Digite a quantidade que deseja: " << endl;
             cin >> quantidade;
+
             if(quantidade <= 0){
                 cout << "Quantidade inválida! Adição cancelada! \n" << endl;
                 return;
+            } 
+
+            int indice = -1;
+            for (int j = 0; j < (int)carrinho.size(); j++) {
+                if (normalize_text(carrinho[j].nome) == normalize_text(produtos[i].nome)) {
+                    indice = j;
+                    break;
+                }
             }
-            carrinho.push_back(produtos[i]);
-            carrinho.back().quantidade = quantidade;
-            cout << "Produto: " << produtos[i].nome << ", " << quantidade << " adicionado ao carrinho com sucesso! \n" << endl;
+            if (indice != -1) {
+                carrinho[indice].quantidade += quantidade;
+                cout << "Quantidade atualizada: " << carrinho[indice].nome
+                        << ", total " << carrinho[indice].quantidade << " no carrinho.\n" << endl;
+            } else {
+                carrinho.push_back(produtos[i]);
+                carrinho.back().quantidade = quantidade;
+                cout << "Produto: " << produtos[i].nome << ", " << quantidade << " adicionado ao carrinho com sucesso! \n" << endl;
+            }
             encontrado = true;
             break;
         }
@@ -125,11 +140,20 @@ void remover(vector<item> &carrinho, const string &nome){
 }
 
 void limpar(vector<item> &carrinho){
+    char escolha;
     while(carrinho.size() > 0){
         carrinho.erase(carrinho.begin());
     }
-    cout << "Itens removidos do carrinho!" << endl;
-    return;
+    cout << "Realemnte deseja excluir todos os itens do seu carrinho? (S/N)\n" << endl;
+    cin >> escolha;
+
+    if(escolha == 's' || escolha == 'S'){
+       cout << "Itens removidos do carrinho!" << endl;
+        return; 
+    } else {
+        cout << "\n Operação cancelada! " << endl;
+        return;
+    }
 }
 
 //função para lista dos itens da loja 
@@ -151,4 +175,11 @@ void itens_carrinho(const vector<item> &carrinho){
     for(int i = 0; i <= carrinho.size() - 1; i++){
         cout << "| Produto: " << carrinho[i].nome << ", " << carrinho[i].quantidade << " Unidades" << " --> " << "Valor porm item R$" << carrinho[i].valor << " |" << endl;
     }
+
+    float soma;
+
+    for(int i = 0; i <= carrinho.size(); i++){
+        soma += (carrinho[i].valor * carrinho[i].quantidade);
+    }
+    cout << "Valor total dos produtos: R$" << soma << endl;
 }
