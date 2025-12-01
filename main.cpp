@@ -29,7 +29,7 @@ int main(){
 
     char escolha;
 
-    cout << " ----- Bem vindo a loja virtual ----- " << endl;
+    cout << "\n ----- Bem vindo a loja virtual ----- " << endl;
 
     do{
         cout << "O que gostaria de realizar? " << endl;
@@ -58,10 +58,10 @@ int main(){
                 break;
             }
             case '4': {
-                cout << "---- MEU CARRINHO ----" << endl;
-                itens_carrinho(carrinho);
-
                 do {
+                    cout << "---- MEU CARRINHO ----" << endl;
+                    itens_carrinho(carrinho);
+                    cout << "----------------------\n" << endl;
                     cout <<" 1 -  Adicionar item\n";
                     cout <<" 2 -  Remover item\n";
                     cout <<" 3 -  Limpar carrinho\n";
@@ -70,19 +70,24 @@ int main(){
 
                     switch(escolha){
                         case '1':{
-
+                            string produto;
+                            adicionar(produtos, carrinho, produto);  
+                            break;
                         }
                         case '2':{
-
+                            string produto;
+                            remover(carrinho, produto);
+                            break;
                         }
                         case '3':{
-
+                            limpar(carrinho);
+                            break;
                         }
                         case '4':{
-                            
+                            break;
                         }
                     }
-                }
+                } while(escolha <= '3');
             }
         }   
         

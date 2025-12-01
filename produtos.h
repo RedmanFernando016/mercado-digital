@@ -12,6 +12,7 @@ struct item{
     string nome;
     double valor;
     int codigo;
+    int quantidade = 0;
 };
 
 void carregar_csv(const string &itens_mercado_csv, vector<item> &produtos);
