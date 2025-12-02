@@ -141,14 +141,15 @@ void remover(vector<item> &carrinho, const string &nome){
 
 void limpar(vector<item> &carrinho){
     char escolha;
-    while(carrinho.size() > 0){
-        carrinho.erase(carrinho.begin());
-    }
+
     cout << "Realemnte deseja excluir todos os itens do seu carrinho? (S/N)\n" << endl;
     cin >> escolha;
 
     if(escolha == 's' || escolha == 'S'){
-       cout << "Itens removidos do carrinho!" << endl;
+        while(carrinho.size() > 0){
+            carrinho.erase(carrinho.begin());
+        }
+        cout << "Itens removidos do carrinho!" << endl;
         return; 
     } else {
         cout << "\n Operação cancelada! " << endl;
@@ -173,7 +174,7 @@ void itens_carrinho(const vector<item> &carrinho){
     }
 
     for(int i = 0; i <= carrinho.size() - 1; i++){
-        cout << "| Produto: " << carrinho[i].nome << ", " << carrinho[i].quantidade << " Unidades" << " --> " << "Valor porm item R$" << carrinho[i].valor << " |" << endl;
+        cout << "| Produto: " << carrinho[i].nome << ", " << carrinho[i].quantidade << " Unidades" << " --> " << "Valor por item R$" << carrinho[i].valor << endl;
     }
 
     float soma;
@@ -181,5 +182,5 @@ void itens_carrinho(const vector<item> &carrinho){
     for(int i = 0; i <= carrinho.size(); i++){
         soma += (carrinho[i].valor * carrinho[i].quantidade);
     }
-    cout << "Valor total dos produtos: R$" << soma << endl;
+    cout << "\n\nValor total dos produtos: R$" << soma << endl;
 }
